@@ -1,0 +1,6 @@
+openai
+line-bot-sdk
+Gunicorn
+Flask
+flask_cors
+Werkzeug==2.2.2
