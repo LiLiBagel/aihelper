@@ -22,8 +22,10 @@ def linebot():
         handler.handle(body, signature)
         tk = json_data['events'][0]['replyToken']
         msg = json_data['events'][0]['message']['text']
+        print("pass 0")
         # 取出文字的前五個字元，轉換成小寫
         ai_msg = msg[:6].lower()
+        print(ai_msg)
         reply_msg = ''
         # 取出文字的前五個字元是 hi ai:
         if ai_msg == 'hi ai:':
