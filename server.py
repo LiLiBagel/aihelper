@@ -30,7 +30,10 @@ def linebot():
         # 取出文字的前五個字元是 hi ai:
         if ai_msg == 'hi ai:':
             openai.api_key = 'sk-proj-1uXnmJnQeXJko3FEPpguT3BlbkFJhN3VI7EXcBSTtoNt5L0D'
-            client = OpenAI()
+            try :
+                client = OpenAI()
+            except Exception as ex:
+                print("error:%s",ex)
             print("pass1")
             # 將第六個字元之後的訊息發送給 OpenAI
             response = client.completions.create(
