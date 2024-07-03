@@ -29,7 +29,7 @@ def linebot():
         reply_msg = ''
         # 取出文字的前五個字元是 hi ai:
         if ai_msg == 'hi ai:':
-            openai.api_key = 'sk-proj-1uXnmJnQeXJko3FEPpguT3BlbkFJhN3VI7EXcBSTtoNt5L0D'
+            openai.api_key = 'sk-lilibagel-Lk9Zpf3dTWbmzzT1xzhrT3BlbkFJozgKyyieCp5o69ytqA6C'
             try :
                 client = OpenAI()
                 print("pass1")
