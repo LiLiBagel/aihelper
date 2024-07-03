@@ -33,6 +33,7 @@ def linebot():
             try :
                 client = OpenAI()
                 print("pass1")
+                print(msg[6:])
                 # 將第六個字元之後的訊息發送給 OpenAI
                 response = client.completions.create(
                     model="ft:davinci-002:personal::9foev6P4",#gpt-3.5-turbo-instruct
