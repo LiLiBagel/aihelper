@@ -29,14 +29,16 @@ def linebot():
         if ai_msg == 'hi ai:':
             openai.api_key = 'sk-proj-1uXnmJnQeXJko3FEPpguT3BlbkFJhN3VI7EXcBSTtoNt5L0D'
             client = OpenAI()
+            print("pass1")
             # 將第六個字元之後的訊息發送給 OpenAI
             response = client.completions.create(
                 model="ft:davinci-002:personal::9foev6P4",#gpt-3.5-turbo-instruct
                 prompt = msg[6:],
                 max_tokens=200,
             )   
+            print("pass2")
             reply_msg = response.choices[0].text
-            
+            print("pass3")
             # 接收到回覆訊息後，移除換行符號
 
         else:
