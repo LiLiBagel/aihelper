@@ -7,8 +7,8 @@ import json
 app = Flask(__name__)
 
 # 初始化 OpenAI Client（新版 SDK 用法）
-client = OpenAI(api_key='sk-proj-1uXnmJnQeXJko3FEPpguT3BlbkFJhN3VI7EXcBSTtoNt5L0D')
-
+client = OpenAI(api_key='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')
+# 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
 # 初始化 LINE Bot API
 line_bot_api = LineBotApi('btYRELB4P+YSCvuIuWxLzcsRBuU4d+uui1/9pWxCZRDS9U6BhGr6MgM9oVgzf8ott8gcjZsD2xuGI4AZVQ4f5vBiYun7G02g9JhLgP8TZY6Fqy9zI9lm/1ekNtNZW249ButepCSwrVO5biQj+zhb3gdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('c2fd42d7c362fc5b9e865772402b3378')
