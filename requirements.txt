@@ -4,3 +4,4 @@ gunicorn
 flask
 flask_cors
 Werkzeug==2.2.2
+apscheduler
