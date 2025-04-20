@@ -1,6 +1,6 @@
-openai
+google-generativeai
 line-bot-sdk
-Gunicorn
-Flask
+gunicorn
+flask
 flask_cors
 Werkzeug==2.2.2
