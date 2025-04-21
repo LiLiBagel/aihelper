@@ -42,7 +42,7 @@ def generate_daily_vocab():
             # 擷取單字（第一行）
             first_line = reply_msg.strip().split('\n')[0]
             new_vocab_list = first_line.split('單字: ')
-            now_sentence = first_line.split('一個與該單字有關的中翻英練習題:')[1].strip()
+            now_sentence = first_line.split('一個與該單字有關的中翻英練習題:')
             save_current_practice_sentence(user_id, now_sentence)
             if len(new_vocab_list) > 1:
                 new_vocab = new_vocab_list[1].strip()
@@ -109,7 +109,7 @@ def linebot():
                 # 抓出單字
                 first_line = daily_vocab_msg.strip().split('\n')[0]
                 new_vocab_list = first_line.split('單字: ')
-                now_sentence = first_line.split('一個與該單字有關的中翻英練習題:')[1].strip()
+                now_sentence = first_line.split('一個與該單字有關的中翻英練習題:')
                 save_current_practice_sentence(user_id, now_sentence)
                 if len(new_vocab_list) > 1:
                     new_vocab = new_vocab_list[1].strip()
