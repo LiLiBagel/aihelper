@@ -133,7 +133,7 @@ def linebot():
                 學生正在練習單字「{current_practice_word}」
                 以下是一位學生的中翻英作品：(題目是「{current_practice_sentence}」)
                 「{user_translation}」
-
+                後續回答請要根據題目、正在練習的單字給出範例與建議
                 請針對以下幾個面向，分段提供具體建議，請勿使用星號或底線：
 
                 **懶人包整理**:(整理以下幾點的內容，約100字的建議，以及一句更好的翻譯句示範)(先出現)
@@ -146,7 +146,7 @@ def linebot():
                 3. 流暢度與邏輯性
                 4. 拼字、標點與大小寫
                 5. 整體評分與建議（1～5分）
-                6. 修改後範例
+                6. 修改後範例(要根據題目、正在練習的單字給出範例)
                 7. 延伸練習
                 """
             response = model.generate_content(prompt)
@@ -159,7 +159,11 @@ def linebot():
             reply_msg = response.text
 
         else:
-            reply_msg = "請輸入『每日單字』或『翻譯：你的句子』，或用『hi ai:』跟我對話～\n如需知道你的 userId 請輸入『我的ID』"
+            reply_msg = """目前有的功能如下:
+            1.『每日單字』我會隨機給你一個單字，並附上例句與中翻英練習題
+            2.『練習翻譯：你的句子』我來為您分析翻譯的句子，並給予建議與範例
+            3.或用『hi ai:』跟我對話～\n
+            如需知道你的 userId 請輸入『我的ID』"""
 
         line_bot_api.reply_message(tk, TextSendMessage(text=reply_msg))
 
