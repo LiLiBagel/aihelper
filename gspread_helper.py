@@ -30,3 +30,26 @@ def add_user_vocab(user_id, new_vocab):
     else:
         # 若使用者尚未存在則新增
         collection.insert_one({"user_id": user_id, "vocab": [new_vocab]})
+def save_current_practice_word(user_id, word):
+    collection.update_one(
+        {"user_id": user_id},
+        {"$set": {"current_practice_word": word}},
+        upsert=True
+    )
+
+# 取得某個使用者當前練習的單字
+def get_current_practice_word(user_id):
+    user = collection.find_one({"user_id": user_id})
+    return user.get("current_practice_word") if user else None
+
+def save_current_practice_sentence(user_id, word):
+    collection.update_one(
+        {"user_id": user_id},
+        {"$set": {"current_practice_sentence": word}},
+        upsert=True
+    )
+
+# 取得某個使用者當前練習的單字
+def get_current_practice_sentence(user_id):
+    user = collection.find_one({"user_id": user_id})
+    return user.get("current_practice_sentence") if user else None
