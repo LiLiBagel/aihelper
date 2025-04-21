@@ -112,7 +112,8 @@ def linebot():
                     break
                 tries += 1
 
-            line_bot_api.reply_message(tk, TextSendMessage(text=reply_msg))
+            line_bot_api.push_message(user_id, TextSendMessage(text=reply_msg))
+
 
 
         # 📝 翻譯建議
