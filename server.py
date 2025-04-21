@@ -5,7 +5,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import google.generativeai as genai
 import json
 from datetime import datetime
-from gspread_helper import get_user_vocab, add_user_vocab,add_user,get_all_users
+from gspread_helper import get_user_vocab, add_user_vocab,add_user,get_all_users,save_current_practice_word,get_current_practice_word,save_current_practice_sentence,get_current_practice_sentence
 app = Flask(__name__)
 
 # ✅ 初始化 Gemini
@@ -42,11 +42,13 @@ def generate_daily_vocab():
             # 擷取單字（第一行）
             first_line = reply_msg.strip().split('\n')[0]
             new_vocab_list = first_line.split('單字: ')
+            now_sentence = first_line.split('一個與該單字有關的中翻英練習題:')[1].strip()
+            save_current_practice_sentence(user_id, now_sentence)
             if len(new_vocab_list) > 1:
                 new_vocab = new_vocab_list[1].strip()
                 if new_vocab not in used_vocab:
                     add_user_vocab(user_id, new_vocab)
-
+                    save_current_practice_word(user_id, new_vocab)
                 line_bot_api.push_message(user_id, TextSendMessage(text=reply_msg))
 
         except Exception as e:
@@ -107,10 +109,13 @@ def linebot():
                 # 抓出單字
                 first_line = daily_vocab_msg.strip().split('\n')[0]
                 new_vocab_list = first_line.split('單字: ')
+                now_sentence = first_line.split('一個與該單字有關的中翻英練習題:')[1].strip()
+                save_current_practice_sentence(user_id, now_sentence)
                 if len(new_vocab_list) > 1:
                     new_vocab = new_vocab_list[1].strip()
                     if new_vocab not in used_vocab:
                         add_user_vocab(user_id, new_vocab)
+                        save_current_practice_word(user_id, new_vocab)
                         break
                 tries += 1
 
@@ -119,10 +124,14 @@ def linebot():
 
 
         # 📝 翻譯建議
-        elif msg.startswith("翻譯："):
+        elif msg.startswith("練習翻譯："):
             user_translation = msg[3:].strip()
+            current_practice_word = get_current_practice_word(user_id)
+            current_practice_sentence = get_current_practice_sentence(user_id)
             prompt = f"""
-                你是一位資深的 CEFR B2 英檢考官兼英文老師，專門幫助學生提升翻譯品質。以下是一位學生的中翻英作品：
+                你是一位資深的 CEFR B2 英檢考官兼英文老師，專門幫助學生提升翻譯品質。
+                學生正在練習單字「{current_practice_word}」
+                以下是一位學生的中翻英作品：(題目是「{current_practice_sentence}」)
                 「{user_translation}」
 
                 請針對以下幾個面向，分段提供具體建議，請勿使用星號或底線：
