@@ -7,3 +7,4 @@ Werkzeug==2.2.2
 apscheduler
 gspread 
 oauth2client
+six
