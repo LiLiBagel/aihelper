@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "englishhelper-457503",
+  "private_key_id": "00afcaa9c20c70b89eafcf976f987f33ee2fc466",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDmewpbWidCY+Gl\nN+aF5FGfOeEPZMguns/uad7YcLHOUsvx7rCLT5jjtV8fmEsNMabF0KKNwplUIRpM\n8YIBECjU7P6Dg71R7+CRoZTX7iKpDrN63hNLMGOBxgkOzyqEg+IZJgda63Jhu2gQ\ntJOFY5Jm9emO9DHfVkB/OszZJAY1HC/ezIntmQMBtjVkGwv7ucE+mnaT9vnES5Hg\n7bQAKBKHkv9VIJ5kgj+sEbQBuK8+lU9xoD4cgJhPMPHL4KFiqChrBItWmL71otGY\nI1EdEs4pDLJmohcN/pPIuunHHW0IFtOPWZAb5FBJ42ahs+hW5zSJJZMx8pFRgPSi\nmTGkaBkVAgMBAAECggEAAl/q7Lu+lVTpW8kYnNjtkWjkBFuiOzvIzNsZQB422Eya\nFtt40Ty7MEB5YXnD1tx8StS2VP/2YQk9ImsmBdodV64vhbQhBF+s6NlPQD1YQkSD\nLOSGY1FEgWMgAhmHkdrpPpl4LuIbeeCXrF8OZtB6ra2oSQ3rbT7M7HZ5G48P12gI\nySq+U+enPQfWxIvTdDt7fX/k6EUkIBIbtvxN2cJ5fx4ud9Dk96prNgUkPi8E3eDd\nSSR2qfvKN+BlFcBHsq3K8tZVbkvIzoKnasq5MLNyfJZ3PNsMcUbxw3mqfJaAdJPB\nQoAi8G9iLqKVywAyLuYgJzLGeKj6fDTkCGwfiJ3QcQKBgQD/+h9SOSboMLJAm/CJ\nol8D2Qi3uocyhQBMre0WL5WHtXaqWh/v/pRa6/mhTFhfQsumYxFzpdN1mDdSATWA\n0hT+1cCiKzpIw/tysT86qjjYPR+zlD6aN8NfhGpOhmr//Vf0ZKXdebfmbfWdnTLK\nIxWplBvt+Zn6ZnkYoVVhvWrQKwKBgQDmgFUpxkD2czKcY9DRnkoE4LYq9th71ErG\nHtjxTnaWo0sac6Ax1SfNVLjUtywsL6GcBQMhIcK5MQmm/m8lOFdm3vF8GoP+BpoT\nGzqt9L10gAmWFFHz8HX9QsxJvBkCFKGmj+wziT7YzzeSCfXx/UB2YTAUknYpEGKv\nvsS7QebbvwKBgE3d6Gk6uXsoVRESXrl/iyfAfcZmF3pmuxCYV+bH0tTVfqOThuOa\nrcZ6whUvBDL2Prz+pfBoIUtEYo+vjncBcSGUJGUwgSphc7wP7wwJfAFLlrkp/2Eq\nVWRZA32fpiz5BChz9YDJ5gdSq8SmbSzQP2a2h0h9BToGsg+sBC0XUcbBAoGAIsfg\nkeIhcU6mp2SEYOzynFPQCSGgPucktUp4T8kYKdjP/1jNJlfUnq4XCbnuB2jUiPdU\npo4ylMEqhLFF0ibzQUmIxMI3goA6hYGJVDBm2gpr5+J/D0EMfL+0lbe1SlQUpE55\nRLmD6zExYG7yVqZxMKuvlpsXC1E2ovA1PVBPZn8CgYEAxpnj6X+uV9p5Mdv6uhiQ\nqZK1fpbalv1a0XQAyBrGaY2OSpD5da1w1x8rb+GQSuTMWB5rRp8YMICRQJ1TkRRN\natp6oT8XguORUGfITi3s0VUHKdGx1Z44mYz9X3cDSx8PKjsno1qRcZArKfDvmul/\nZrZWo38cgBEqont8/9Mz1VM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "vocab-bot-service-account@englishhelper-457503.iam.gserviceaccount.com",
+  "client_id": "101051850127555157832",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vocab-bot-service-account%40englishhelper-457503.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
