@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 # 初始化 MongoDB 客戶端
-client = MongoClient("mongodb://atlas-sql-67e2702254cb24561a134f25-xzijt.a.query.mongodb.net/myVirtualDatabase?ssl=true&authSource=admin")  # 替換為你的 MongoDB URI
+client = MongoClient("mongodb+srv://bubble60324:RainonSunny0@cluster0.xzijt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")  # 替換為你的 MongoDB URI
 db = client["vocab_db"]  # 資料庫名稱
 collection = db["users"]  # 集合名稱
 
