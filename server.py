@@ -28,18 +28,19 @@ def generate_daily_vocab():
 
             prompt = (
                 f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
-                "請輸出格式如以下：\n"
-                "1. 單字名稱:\n"
-                "2. 英文解釋與中文意思:\n"
-                "3. 一個英文例句與中譯:\n"
-                "4. 一個與該單字有關的中翻英練習題:\n"
+                    "請輸出格式如下：\n"
+                    "單字:xxx\n"
+                    "1. 單字及詞性: **xxx (v.)**\n"
+                    "2. 英文解釋與中文意思:\n"
+                    "3. 一個英文例句與中譯:\n"
+                    "4. 一個與該單字有關的中翻英練習題:\n"
             )
             response = model.generate_content(prompt)
             reply_msg = response.text
 
             # 擷取單字（第一行）
             first_line = reply_msg.strip().split('\n')[0]
-            new_vocab = first_line.split(' ')[0].lower()
+            new_vocab = first_line.split('單字: ')
 
             if new_vocab not in used_vocab:
                 add_user_vocab(user_id, new_vocab)
@@ -93,7 +94,8 @@ def linebot():
                 prompt = (
                     f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
                     "請輸出格式如下：\n"
-                    "1. 單字及詞性:\n"
+                    "單字:xxx\n"
+                    "1. 單字及詞性: **xxx (v.)**\n"
                     "2. 英文解釋與中文意思:\n"
                     "3. 一個英文例句與中譯:\n"
                     "4. 一個與該單字有關的中翻英練習題:\n"
@@ -103,7 +105,7 @@ def linebot():
 
                 # 抓出單字（例如第一行格式為 "abandon (v.): ...）
                 first_line = reply_msg.strip().split('\n')[0]
-                new_vocab = first_line.split(' ')[0].lower()
+                new_vocab = first_line.split('單字: ')
 
                 if new_vocab not in used_vocab:
                     add_user_vocab(user_id, new_vocab)
