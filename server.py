@@ -33,7 +33,7 @@ def generate_daily_vocab():
                 "1. 單字及詞性: **xxx (v.)**\n"
                 "2. 英文解釋與中文意思:\n"
                 "3. 一個英文例句與中譯:\n"
-                "4. 一個與該單字有關的中翻英練習題:\n"
+                "4. 一個與該單字有關的中翻英練習題(不要給答案，只要題目):\n"
             )
             response = model.generate_content(prompt)
             reply_msg = response.text
@@ -97,7 +97,7 @@ def linebot():
                     "1. 單字及詞性: **xxx (v.)**\n"
                     "2. 英文解釋與中文意思:\n"
                     "3. 一個英文例句與中譯:\n"
-                    "4. 一個與該單字有關的中翻英練習題:\n"
+                    "4. 一個與該單字有關的中翻英練習題(不要給答案，只要題目):\n"
                 )
                 response = model.generate_content(prompt)
                 daily_vocab_msg = response.text
