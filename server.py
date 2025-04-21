@@ -5,7 +5,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import google.generativeai as genai
 import json
 from datetime import datetime
-
+from gspread_helper import get_user_vocab, add_user_vocab,add_user,get_all_users
 app = Flask(__name__)
 
 # ✅ 初始化 Gemini
@@ -19,19 +19,37 @@ handler = WebhookHandler('c2fd42d7c362fc5b9e865772402b3378')
 # ✅ 使用者 ID（你要接收推播的那個 userId）
 USER_ID = ''
 
-# ✅ 每日單字功能（自動）
 def generate_daily_vocab():
-    prompt = (
-        f"請隨機提供一個英文 B2 等級單字(每次都要不同)，請輸出包含以下：\n"
-        "1. 單字及詞性:\n"
-        "2. 英文解釋與中文意思:\n"
-        "3. 一個英文例句與中譯:\n"
-        "4. 一個與該單字有關的中翻英練習題:\n"
-        "請用自然段落輸出，請勿使用星號、底線或其他標記符號。請務必根據日期變化給不同單字。並確保要照著格式使用中英混合回答我。"
-    )
-    response = model.generate_content(prompt)
-    reply_msg = response.text
-    line_bot_api.push_message(USER_ID, TextSendMessage(text=reply_msg))
+    user_ids = get_all_users()
+    for user_id in user_ids:
+        try:
+            used_vocab = get_user_vocab(user_id)
+            print(f"{user_id} 已出現的單字：", used_vocab)
+
+            prompt = (
+                f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
+                "請輸出包含以下：\n"
+                "1. 單字及詞性:\n"
+                "2. 英文解釋與中文意思:\n"
+                "3. 一個英文例句與中譯:\n"
+                "4. 一個與該單字有關的中翻英練習題:\n"
+                "請用自然段落輸出，請勿使用標記符號。"
+            )
+            response = model.generate_content(prompt)
+            reply_msg = response.text
+
+            # 擷取單字（第一行）
+            first_line = reply_msg.strip().split('\n')[0]
+            new_vocab = first_line.split(' ')[0].lower()
+
+            if new_vocab not in used_vocab:
+                add_user_vocab(user_id, new_vocab)
+
+            line_bot_api.push_message(user_id, TextSendMessage(text=reply_msg))
+
+        except Exception as e:
+            print(f"Error for user {user_id}: {e}")
+
 
 # ✅ 設定定時任務
 scheduler = BackgroundScheduler()
@@ -57,21 +75,45 @@ def linebot():
 
         # 📌 顯示 userId 功能
         if msg == '我的ID':
-            USER_ID = user_id
+            add_user(user_id)  # 新增到 Google Sheet
             reply_msg = f"你的 userId 是：{user_id}"
 
-        # 📚 每日單字（即時版）
+
+        
+
         elif msg == '每日單字':
-            prompt = (
-                f"請隨機提供一個英文 B2 等級單字(每次都要不同)，請輸出包含以下：\n"
-                "1. 單字及詞性:\n"
-                "2. 英文解釋與中文意思:\n"
-                "3. 一個英文例句與中譯:\n"
-                "4. 一個與該單字有關的中翻英練習題:\n"
-                "請用自然段落輸出，請勿使用星號、底線或其他標記符號。請務必根據日期變化給不同單字。並確保要照著格式使用中英混合回答我。"
-            )
-            response = model.generate_content(prompt)
-            reply_msg = response.text
+            used_vocab = get_user_vocab(user_id)
+            print("已出現的單字：", used_vocab)
+
+            tries = 0
+            max_tries = 5
+            new_vocab = ''
+            reply_msg = ''
+
+            while tries < max_tries:
+                prompt = (
+                    f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
+                    "請輸出包含以下：\n"
+                    "1. 單字及詞性:\n"
+                    "2. 英文解釋與中文意思:\n"
+                    "3. 一個英文例句與中譯:\n"
+                    "4. 一個與該單字有關的中翻英練習題:\n"
+                    "請用自然段落輸出，請勿使用標記符號。"
+                )
+                response = model.generate_content(prompt)
+                reply_msg = response.text
+
+                # 抓出單字（例如第一行格式為 "abandon (v.): ...）
+                first_line = reply_msg.strip().split('\n')[0]
+                new_vocab = first_line.split(' ')[0].lower()
+
+                if new_vocab not in used_vocab:
+                    add_user_vocab(user_id, new_vocab)
+                    break
+                tries += 1
+
+            line_bot_api.reply_message(tk, TextSendMessage(text=reply_msg))
+
 
         # 📝 翻譯建議
         elif msg.startswith("翻譯："):
