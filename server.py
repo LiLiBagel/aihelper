@@ -28,24 +28,25 @@ def generate_daily_vocab():
 
             prompt = (
                 f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
-                    "請輸出格式如下：\n"
-                    "單字: xxx\n"
-                    "1. 單字及詞性: **xxx (v.)**\n"
-                    "2. 英文解釋與中文意思:\n"
-                    "3. 一個英文例句與中譯:\n"
-                    "4. 一個與該單字有關的中翻英練習題:\n"
+                "請輸出格式如下：\n"
+                "單字: xxx\n"
+                "1. 單字及詞性: **xxx (v.)**\n"
+                "2. 英文解釋與中文意思:\n"
+                "3. 一個英文例句與中譯:\n"
+                "4. 一個與該單字有關的中翻英練習題:\n"
             )
             response = model.generate_content(prompt)
             reply_msg = response.text
 
             # 擷取單字（第一行）
             first_line = reply_msg.strip().split('\n')[0]
-            new_vocab = first_line.split('單字: ')
+            new_vocab_list = first_line.split('單字: ')
+            if len(new_vocab_list) > 1:
+                new_vocab = new_vocab_list[1].strip()
+                if new_vocab not in used_vocab:
+                    add_user_vocab(user_id, new_vocab)
 
-            if new_vocab not in used_vocab:
-                add_user_vocab(user_id, new_vocab)
-
-            line_bot_api.push_message(user_id, TextSendMessage(text=reply_msg))
+                line_bot_api.push_message(user_id, TextSendMessage(text=reply_msg))
 
         except Exception as e:
             print(f"Error for user {user_id}: {e}")
@@ -79,8 +80,6 @@ def linebot():
             reply_msg = f"你的 userId 是：{user_id}"
 
 
-        
-
         elif msg == '每日單字':
             used_vocab = get_user_vocab(user_id)
             print("已出現的單字：", used_vocab)
@@ -88,7 +87,7 @@ def linebot():
             tries = 0
             max_tries = 5
             new_vocab = ''
-            reply_msg = ''
+            daily_vocab_msg = '' # 用於儲存每日單字的訊息
 
             while tries < max_tries:
                 prompt = (
@@ -101,19 +100,20 @@ def linebot():
                     "4. 一個與該單字有關的中翻英練習題:\n"
                 )
                 response = model.generate_content(prompt)
-                reply_msg = response.text
+                daily_vocab_msg = response.text
 
-                # 抓出單字（例如第一行格式為 "abandon (v.): ...）
-                first_line = reply_msg.strip().split('\n')[0]
-                new_vocab = first_line.split('單字: ')
-
-                if new_vocab not in used_vocab:
-                    add_user_vocab(user_id, new_vocab)
-                    break
+                # 抓出單字
+                first_line = daily_vocab_msg.strip().split('\n')[0]
+                new_vocab_list = first_line.split('單字: ')
+                if len(new_vocab_list) > 1:
+                    new_vocab = new_vocab_list[1].strip()
+                    if new_vocab not in used_vocab:
+                        add_user_vocab(user_id, new_vocab)
+                        break
                 tries += 1
 
-            line_bot_api.push_message(user_id, TextSendMessage(text=reply_msg))
-
+            line_bot_api.push_message(user_id, TextSendMessage(text=daily_vocab_msg))
+            reply_msg = '' # 設定為空，避免重複回覆
 
 
         # 📝 翻譯建議
@@ -124,11 +124,11 @@ def linebot():
                 「{user_translation}」
 
                 請針對以下幾個面向，分段提供具體建議，請勿使用星號或底線：
-                
+
                 **懶人包整理**:(整理以下幾點的內容，約100字的建議，以及一句更好的翻譯句示範)
                 建議:
                 更好示範:
-                
+
                 **詳細資訊:**
                 1. 語法與句型結構
                 2. 詞彙與用字選擇
