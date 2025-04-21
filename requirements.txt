@@ -6,5 +6,5 @@ flask_cors
 Werkzeug==2.2.2
 apscheduler
 gspread 
-oauth2client
+google-auth
 six
