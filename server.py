@@ -28,12 +28,11 @@ def generate_daily_vocab():
 
             prompt = (
                 f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
-                "請輸出包含以下：\n"
-                "1. 單字及詞性:\n"
+                "請輸出格式如以下：\n"
+                "1. 單字名稱:\n"
                 "2. 英文解釋與中文意思:\n"
                 "3. 一個英文例句與中譯:\n"
                 "4. 一個與該單字有關的中翻英練習題:\n"
-                "請用自然段落輸出，請勿使用標記符號。"
             )
             response = model.generate_content(prompt)
             reply_msg = response.text
@@ -93,12 +92,11 @@ def linebot():
             while tries < max_tries:
                 prompt = (
                     f"請提供一個不在以下清單中的 B2 單字：{used_vocab}\n"
-                    "請輸出包含以下：\n"
+                    "請輸出格式如下：\n"
                     "1. 單字及詞性:\n"
                     "2. 英文解釋與中文意思:\n"
                     "3. 一個英文例句與中譯:\n"
                     "4. 一個與該單字有關的中翻英練習題:\n"
-                    "請用自然段落輸出，請勿使用標記符號。"
                 )
                 response = model.generate_content(prompt)
                 reply_msg = response.text
